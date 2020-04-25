@@ -28,14 +28,22 @@ document.addEventListener("DOMContentLoaded", function() {
     const displayBook = (book) => {
         infoContainer.innerHTML = `
         <div data-id=${book.id} class="card">
-        <h2>${book.title}</h2>
-        <img src=${book.img_url} class="book-image" />
-        <p>${book.description}</p>
-        <ul class='user-container'>
-        </ul>
-        <button class="read_btn">READ</button>
+            <h2>${book.title}</h2>
+            <img src=${book.img_url} class="book-image" />
+            <h4>Book Description:</h4>
+            <p>${book.description}</p>
+            <h4>Book Fan's</h4>
+            <ul class='user-container'>
+            </ul>
+            <button class="read_btn">READ</button>
         </div>
-        `   
+        ` 
+        book.users.forEach(user => {
+            const userContainer = document.querySelector('.user-container')
+            const userLi = document.createElement('li')
+            userLi.textContent = user.username
+            userContainer.append(userLi) 
+        }) 
         readButtonEvent()
     };
 
@@ -43,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const readBtn = document.querySelector('.read_btn')
         readBtn.addEventListener('click', function(event){
             let book = event.target.parentElement.dataset.id
-            console.log(book)
             fetch(`http://localhost:3000/books/${book}`)
             .then(response => response.json())
             .then(bookObj => checkCurrentUsers(bookObj.users, book))
@@ -51,52 +58,30 @@ document.addEventListener("DOMContentLoaded", function() {
     };
 
     const checkCurrentUsers = (users, book) => {
-        console.log(users)
         const newUser = 'pouros'
         const found = users.some(el => el.username === newUser)
-        // have to figure out how to send current users in patch request
         if (!found){
-            addNewUser(book) //will also need to pass users as param once i figure that out
+            addNewUser(users, book) 
         } else {
             alert('You Have Already Read This Book!')
-            users.forEach(user => displayUsers(user))
         }
     };
 
-    const addNewUser = (book) => { //need to append users to userContainer
+    const addNewUser = (users, book) => { 
+        let usersArray = users.push({id:1, username:'pouros'})
+        console.log(usersArray)
+        console.log(users)
+        const usersContainer = document.querySelector('.user-container')
+        const newUserLi = document.createElement('li')
+        newUserLi.textContent = 'pouros'
+        usersContainer.append(newUserLi)
         fetch(`http://localhost:3000/books/${book}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                "Accept": 'application/json'
+                'Accept': 'application/json'
             },
-            body: JSON.stringify({
-                users:[
-                    {'id': 1, 'username': 'pouros'}
-                ]
-            })
+            body: JSON.stringify({users})
         })
-        console.log('you are a new user')
-    };
-
-    const displayUsers = (user) => {
-        //only test on book 4
-        const userContainer = document.querySelector('.user-container')
-        const userLi = document.createElement('li')
-        userLi.textContent = user.username
-        userContainer.append(userLi)
-    };
-
-
-
-
-
-
-
-
-
-
-// fetchBooks()
-// retrieveSingleBook()
-//end of DOMContentLoaded    
+    };   
 });
