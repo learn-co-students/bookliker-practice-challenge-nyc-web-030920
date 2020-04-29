@@ -12,6 +12,7 @@ fetch(booksURL)
   });
 
 const slapBookLiOnDom = ({ id, title }) => {
+  // debugger
   // create an element
   const bookListItem = document.createElement('li');
   // populate the element with information from the book object
@@ -22,16 +23,18 @@ const slapBookLiOnDom = ({ id, title }) => {
 };
 
 bookList.addEventListener('click', (evt) => {
+  // debugger
   fetchOneBook(evt.target.dataset.id);
-  clearShowBookPanel()
+  clearShowBookPanel();
 });
 
-const clearShowBookPanel = () => showBookPanel.innerHTML = '';
+const clearShowBookPanel = () => (showBookPanel.innerHTML = '');
 
 const fetchOneBook = (id) => {
   fetch(booksURL + '/' + id)
     .then((res) => res.json())
     .then(({ id, title, description, img_url, users }) => {
+      // debugger
       // create the necessary tags
       const titleH2Tag = document.createElement('h2');
       const thumbnailImgTag = document.createElement('img');
