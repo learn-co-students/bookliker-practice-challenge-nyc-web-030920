@@ -7,11 +7,15 @@
       "img_url": "http://books.google.com/books/content?id=CEMZ1OoPDIAC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
       "users": [
         {
-          "id": 2,
-          "username": "auer"
+          "id": 1,
+          "username": "pouros"
         },
         {
-          "id": 8,
+          "id": "10",
+          "username": "macejkovic"
+        },
+        {
+          "id": "8",
           "username": "goodwin"
         }
       ]
@@ -175,48 +179,6 @@
           "username": "macejkovic"
         }
       ]
-    }
-  ],
-  "users": [
-    {
-      "id": 1,
-      "username": "pouros"
-    },
-    {
-      "id": 2,
-      "username": "auer"
-    },
-    {
-      "id": 3,
-      "username": "marvin"
-    },
-    {
-      "id": 4,
-      "username": "batz"
-    },
-    {
-      "id": 5,
-      "username": "king"
-    },
-    {
-      "id": 6,
-      "username": "steuber"
-    },
-    {
-      "id": 7,
-      "username": "steuber"
-    },
-    {
-      "id": 8,
-      "username": "goodwin"
-    },
-    {
-      "id": 9,
-      "username": "nikolaus"
-    },
-    {
-      "id": 10,
-      "username": "macejkovic"
     }
   ]
 }
