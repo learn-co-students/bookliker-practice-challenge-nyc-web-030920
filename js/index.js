@@ -88,11 +88,11 @@ function booksToDom(hash) {
                 button.previousElementSibling.appendChild(nameLi)
                 let bookId = button.parentNode.firstChild.dataset.id
 
-                let currentLi = parent.querySelectorAll('li')
+                let currentLi = Array.from(parent.querySelectorAll('li'))
                 function duncanIdea(array) {
-                    array.forEach(element => {
-                        let userObj = `{"id":${element.dataset.id}, "username":"${element.innerText}"}`
-                        console.log(userObj)
+                     array.map(element => {
+                        let userObj = {"id":`${element.dataset.id}`, "username":`${element.innerText}`}
+                        return userObj
                     })
                 }
                 
