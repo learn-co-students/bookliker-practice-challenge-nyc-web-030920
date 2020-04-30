@@ -5,8 +5,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
   getBooks()
 
- 
-  
   document.addEventListener('click', event => {
     if (event.target.tagName === 'H3') {
       if (currentBookId === event.target.dataset.id) {
@@ -36,32 +34,47 @@ document.addEventListener("DOMContentLoaded", function() {
     if (event.target.tagName === 'BUTTON') {
       let users = []
       parentDiv = event.target.parentNode
-      
+
+      let userList = []
+      parentDiv.childNodes.forEach(ele => {
+        if (ele.tagName === 'H5') {
+          userList.push(ele)
+        }
+      })
+
+      let userOnePresent;
+
+      userList.forEach(ele => {
+        if (ele.innerText !== 'pouros') {
+          userOnePresent = false
+        } else {
+          userOnePresent = true
+        }
+      })
+
       for(const ele of parentDiv.children) {
         if (ele.tagName === 'H5') {
           if (ele.innerText !== 'pouros') {
-            // alert('You read this already!')
             users.push({id: ele.dataset.id, username: ele.innerText})
-            console.log('first time reading')
-
-
           } else {
-            return(alert('You read this already!'))
+            alert('You read this already!')
           }
         } 
       }
       
       users.unshift(userOne)
 
-      console.log(users)
-
-      fetch(`${endpoint}/${1}`, {
+      fetch(`${endpoint}/${event.target.dataset.id}`, {
         method: 'PATCH',
         headers,
         body: JSON.stringify({users: users})
       })
       .then(resp => resp.json())
-      .then(json => renderUserOne(json['users'][0], parentDiv, event.target))
+      .then(json => {
+        if (userOnePresent === false) {
+        renderUserOne(json['users'][0], parentDiv, event.target)
+        }
+      })
 
     }
   })
@@ -76,7 +89,6 @@ function renderUserOne(userOneObj, div, button){
 
   div.insertBefore(h5, button)
 }
-
 
 const userOne = {
   id: 1,
@@ -148,8 +160,6 @@ function renderData(bookObj) {
   });
 
   div.append(button)
-
-
   showPanelDIV.append(div)
 }
 
